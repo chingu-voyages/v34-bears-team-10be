@@ -1,6 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize"
 
 import productsRoutes from "./components/products/productsRoutes.js";
 
@@ -8,6 +8,12 @@ const app = express()
 
 dotenv.config()
 const { PORT, CONNECTION_URI } = process.env
+
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json())
+
+app.use('/products', productsRoutes)
 
 
 const sequelize = new Sequelize(CONNECTION_URI, {
@@ -19,7 +25,6 @@ const sequelize = new Sequelize(CONNECTION_URI, {
   }
 })
 
-
 try {
   await sequelize.authenticate();
   console.log("Connection has been established")
@@ -29,11 +34,6 @@ try {
   sequelize.close()
 }
 
-app.use('/products', productsRoutes)
-
-app.get('/status', (req, res) => {
-  res.status(200).end()
-})
 
 app.listen(PORT, ()=> {
   console.log(`App listening at ${PORT}`)
