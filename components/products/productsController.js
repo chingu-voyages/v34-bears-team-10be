@@ -1,15 +1,16 @@
 import productsDAO from './productsDAO.js'
 
 
-export const getProducts = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await productsDAO.getProducts()
+    const products = await productsDAO.getAllProducts()
     res.status(200).json(products)
   } catch (err) {
     res.status(404).json({message: err.message})
   }
 }
 
+/*
 export const addProducts = async (req, res) => {
   try {
     let { data } = req.body
@@ -42,5 +43,6 @@ export const deleteProducts = async (req, res) => {
   }
 }
 
+*/
 
 
